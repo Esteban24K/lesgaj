@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LESGA Juegos | Aprende jugando lo que crece en Pasto</title>
+<meta name="description" content="Juegos para niños de 4 a 9 años que enseñan el valor de los productos del campo de Pasto y Nariño.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap">
+<style>
+/* Layout: one column, huge tap targets, mascot on top, three game buttons. Single bright theme on purpose (kids app). */
+:root{
+  --bg:#e4f4ec; --card:#ffffff; --ink:#173326; --soft:#4d6b5c; --green:#2f8f63; --green-d:#1f5a45;
+  --yellow:#f6c43a; --wine:#a63a55; --orange:#ef8a3a; --sky:#cfe9f3; --line:#c5dccf;
+  --f:"Baloo 2","Trebuchet MS","Comic Sans MS",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font:500 18px/1.35 var(--f);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 40px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:4px solid var(--yellow);outline-offset:3px}
+h1,h2{font-family:var(--f);margin:0;line-height:1.05}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-weight:800;font-size:1.5rem;letter-spacing:.08em;color:var(--green-d)}
+.brand span{color:var(--wine)}
+.icon{width:52px;height:52px;border-radius:50%;background:var(--card);border:3px solid var(--line);display:grid;place-items:center;font-weight:800}
+.stars{display:flex;gap:8px;justify-content:center;margin:10px 0 0}
+.star{width:44px;height:44px}
+.star path{fill:var(--line);stroke:none}
+.star.on path,.bigstar path{fill:var(--yellow);stroke:#c99a12;stroke-width:2}
+.mascot{display:flex;align-items:center;gap:6px;margin:6px 0 4px}
+.mascot button{flex:0 0 150px;width:150px;max-width:38%}
+.bubble{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 16px;font-size:1.15rem;position:relative}
+.menu{display:grid;gap:14px;margin-top:10px}
+.game{display:flex;align-items:center;gap:14px;background:var(--card);border:4px solid var(--line);border-radius:28px;padding:12px 16px;text-align:left;min-height:104px;width:100%;transition:transform .12s}
+.game:active{transform:scale(.97)}
+.game .pic{flex:0 0 88px;height:80px;border-radius:18px;overflow:hidden;background:var(--sky)}
+.game .pic svg{width:100%;height:100%;display:block}
+.game b{font-size:1.4rem;display:block;line-height:1.05}
+.game small{color:var(--soft);font-size:.95rem;font-weight:500}
+.game .ok{margin-left:auto;flex:0 0 36px;height:36px}
+.g1{border-color:#9fd3b6}.g2{border-color:#f0d58a}.g3{border-color:#e3a9b8}
+.view h2{font-size:1.7rem;text-align:center;margin:8px 0 14px;text-wrap:balance}
+.back{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:3px solid var(--line);border-radius:999px;padding:8px 18px;font-weight:700}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.slot{aspect-ratio:1/1.1;border:4px dashed var(--line);border-radius:20px;background:#ffffff80;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;color:var(--soft);font-size:1.6rem;min-width:0;overflow:hidden}
+.slot.full{border-style:solid;border-color:var(--green);background:var(--card);color:var(--ink);font-size:.95rem}
+.slot svg{width:92%;height:auto;max-height:70%}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.pick{background:var(--card);border:4px solid var(--line);border-radius:24px;padding:8px;display:flex;flex-direction:column;align-items:center;font-weight:800;font-size:1.15rem;min-height:128px;justify-content:center}
+.pick svg{width:80%;max-width:150px;height:auto}
+.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.scene{background:var(--card);border:4px solid var(--line);border-radius:28px;padding:10px;text-align:center}
+.scene svg{width:100%;max-width:360px;height:auto}
+.stalls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.stall{border:5px solid;border-radius:26px;padding:12px 8px;background:var(--card);display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:1.15rem;line-height:1.05;min-height:150px;justify-content:center}
+.stall.a{border-color:#9aa5a0}.stall.b{border-color:var(--green)}
+.stall svg{width:70%;max-width:120px;height:auto}
+.coins{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.coin{width:40px;height:40px;border-radius:50%;background:var(--yellow);border:4px solid #d39e10;display:grid;place-items:center;font-weight:800;color:#8a6200;animation:pop .35s both}
+@keyframes pop{from{transform:scale(0) rotate(-90deg)}to{transform:scale(1) rotate(0)}}
+.msg{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:12px 16px;text-align:center;font-size:1.2rem;margin-top:12px}
+.big{display:block;width:100%;background:var(--green);color:#fff;border-radius:999px;padding:14px 20px;font-weight:800;font-size:1.3rem;margin-top:12px;border-bottom:6px solid var(--green-d)}
+.big.alt{background:var(--card);color:var(--ink);border:3px solid var(--line);border-bottom-width:6px}
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mc{aspect-ratio:1/1.12;border-radius:20px;border:4px solid var(--line);background:var(--green);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:0;min-width:0}
+.mc.up{background:var(--card);border-color:#9fd3b6}
+.mc.done{background:#fff;border-color:var(--yellow)}
+.mc svg{width:100%;height:auto}
+.mc .nm{font-size:.95rem;font-weight:800;line-height:1}
+.mc .bk{width:46%;opacity:.55}
+.win{text-align:center;padding:10px 0}
+.win .bigstar{width:110px;height:110px;animation:pop .5s both}
+.badge{background:var(--yellow);border-radius:26px;padding:14px 16px;text-align:center;margin-top:14px;border:4px solid #d39e10}
+.badge b{font-size:1.5rem;display:block}
+.badge a{display:inline-block;margin-top:8px;background:var(--card);color:var(--ink);border-radius:999px;padding:8px 18px;font-weight:800;text-decoration:none}
+.foot{margin-top:22px;text-align:center;font-size:.9rem;color:var(--soft)}
+.foot a{color:var(--green-d);font-weight:700}
+@media (min-width:560px){.mem{grid-template-columns:repeat(4,1fr)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap"><div id="app"></div></div>
+
+<script>
+var $=function(i){return document.getElementById(i)};
+var state={sound:true,done:{1:false,2:false,3:false}};
+try{var sv=JSON.parse(localStorage.getItem("lesga-juegos")||"null");if(sv&&sv.done)state.done=sv.done}catch(e){}
+function save(){try{localStorage.setItem("lesga-juegos",JSON.stringify({done:state.done}))}catch(e){}}
+function say(t){if(!state.sound)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="es-CO";u.rate=.9;u.pitch=1.15;speechSynthesis.speak(u)}catch(e){}}
+var AC=null;
+function tone(f,d,t){if(!state.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.type=t||"sine";o.frequency.value=f;g.gain.value=.12;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.stop(AC.currentTime+d)}catch(e){}}
+function good(){tone(660,.12);setTimeout(function(){tone(880,.18)},110)}
+function bad(){tone(200,.25,"triangle")}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+
+/* ---------- drawing helpers ---------- */
+function E(cx,cy,rx,ry,f,r,o){return '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="'+f+'" transform="rotate('+(r||0)+' '+cx+' '+cy+')" opacity="'+(o||1)+'"/>'}
+function C(cx,cy,r,f,o){return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="'+f+'" opacity="'+(o||1)+'"/>'}
+function PA(d,f,s,w){return '<path d="'+d+'" fill="'+(f||"none")+'"'+(s?' stroke="'+s+'" stroke-width="'+(w||3)+'" stroke-linecap="round" stroke-linejoin="round"':'')+'/>'}
+function svg(vb,inner,label){return '<svg viewBox="'+vb+'" role="img" aria-label="'+(label||"")+'">'+inner+'</svg>'}
+function starSvg(on,cls){return '<svg class="'+(cls||"star")+(on?" on":"")+'" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.7-5.2 4.6 1.5 6.8L12 17l-6.1 3.4 1.5-6.8L2.2 9l6.9-.7z"/></svg>'}
+function potato(cx,cy,s,col){return E(cx,cy,26*s,19*s,col||"#d9a85a",-8)+E(cx-8*s,cy-7*s,12*s,6*s,"#fff",-8,.22)+C(cx+8*s,cy+2*s,1.8*s,"#000",.3)+C(cx-10*s,cy+7*s,1.6*s,"#000",.3)}
+function mascot(){
+  return svg("0 0 200 200",'<ellipse cx="100" cy="184" rx="58" ry="8" fill="#000" opacity=".12"/>'+
+  PA("M100 54 Q99 38 105 28",null,"#3f9a4a",5)+E(90,34,15,7,"#4fae57",-30)+E(116,26,15,7,"#4fae57",28)+
+  E(100,116,64,60,"#d9a85a")+E(78,84,26,12,"#fff",-20,.2)+C(138,140,3,"#000",.25)+C(60,134,3,"#000",.25)+C(118,150,2.5,"#000",.25)+
+  C(78,104,12,"#fff")+C(122,104,12,"#fff")+C(80,106,6.5,"#1b1b1b")+C(124,106,6.5,"#1b1b1b")+C(82,103,2,"#fff")+C(126,103,2,"#fff")+
+  C(62,126,8,"#f08a8a",.55)+C(138,126,8,"#f08a8a",.55)+PA("M80 132 Q100 156 120 132 Q100 140 80 132Z","#8a2d2d")+
+  E(58,172,15,8,"#a63a55")+E(142,172,15,8,"#a63a55"),"Pachi, la papita");
+}
+
+/* product art for memory game (ids match the LESGA store) */
+var PRODS={1:{n:"Papa pastusa",c:"#c99a3d"},2:{n:"Papa criolla",c:"#e8b931"},3:{n:"Papa roja",c:"#a63a55"},4:{n:"Ulluco",c:"#d36b8e"},5:{n:"Oca",c:"#d9823b"},6:{n:"Haba",c:"#6aa35a"}};
+function art(id){var c=PRODS[id].c,g="",i,j;
+  if(id===1||id===3){[[70,92,.95,-10],[135,78,1.05,8],[200,96,.85,22]].forEach(function(p){g+=potato(p[0],p[1],p[2],c)});g=g.replace(/rotate\(-8/g,"rotate(-8")}
+  else if(id===2){[[70,98],[112,76],[158,96],[200,74],[236,100],[96,114],[182,116]].forEach(function(p,k){g+=C(p[0],p[1],21-k%2*3,c)+E(p[0]-6,p[1]-7,8,4,"#fff",-20,.3)+C(p[0]+6,p[1]+3,2,"#000",.3)})}
+  else if(id===4){for(i=0;i<10;i++){var a=60+(i%5)*45+(i>4?22:0),b=i<5?76:106;g+=E(a,b,20,13,[c,"#f0c94a","#c0407a"][i%3],(i*37)%60-30)+C(a-4,b-2,2,"#7a1d4c",.6)+C(a+6,b+3,2,"#7a1d4c",.6)}}
+  else if(id===5){[[90,84,50,15,-20],[190,66,50,15,15],[110,116,50,15,8],[220,108,48,14,-12]].forEach(function(p,k){g+='<g transform="rotate('+p[4]+' '+p[0]+' '+p[1]+')">'+E(p[0],p[1],p[2],p[3],k%2?"#e9a8b0":c);for(j=0;j<4;j++)g+=PA("M"+(p[0]-27+j*18)+" "+(p[1]-11)+" L"+(p[0]-27+j*18)+" "+(p[1]+11),null,"rgba(0,0,0,.22)",2.5);g+='</g>'})}
+  else{[[150,60,-6],[150,106,5]].forEach(function(p){g+='<g transform="rotate('+p[2]+' 150 '+p[1]+')">'+E(150,p[1],100,19,c);for(j=0;j<5;j++)g+=C(98+j*26,p[1],12,"#a8d48f")+C(94+j*26,p[1]-4,3.5,"#fff",.4);g+='</g>'})}
+  return svg("0 0 300 150",g,PRODS[id].n);
+}
+/* stages for game 1 */
+var SOIL='<rect x="0" y="62" width="120" height="38" fill="#7a5230"/><path d="M0 62 Q30 52 60 60 Q90 68 120 58 L120 66 L0 66Z" fill="#8a5a35"/>';
+var STG=[
+ {t:"Semilla",s:svg("0 0 120 100",'<rect width="120" height="100" fill="#cfe9f3"/>'+SOIL+potato(60,62,.55),"Semilla")},
+ {t:"Brote",s:svg("0 0 120 100",'<rect width="120" height="100" fill="#cfe9f3"/>'+SOIL+PA("M60 64 L60 26",null,"#3f9a4a",5)+E(46,36,13,6,"#4fae57",-30)+E(74,28,13,6,"#4fae57",30)+E(50,52,10,5,"#4fae57",-20),"Brote")},
+ {t:"Cosecha",s:svg("0 0 120 100",'<rect width="120" height="100" fill="#cfe9f3"/>'+SOIL+PA("M60 62 L60 38",null,"#b59a3a",4)+E(52,42,9,4,"#c7b13f",-30)+potato(32,70,.5)+potato(62,76,.6)+potato(92,70,.5),"Cosecha")},
+ {t:"Mercado",s:svg("0 0 120 100",'<rect width="120" height="100" fill="#cfe9f3"/><rect x="14" y="14" width="92" height="22" fill="#fff"/>'+[0,1,2,3,4,5].map(function(k){return '<rect x="'+(14+k*15.34)+'" y="14" width="7.7" height="22" fill="#a63a55"/>'}).join("")+PA("M20 36 L20 84 M100 36 L100 84",null,"#7a5230",4)+'<rect x="16" y="64" width="88" height="9" fill="#9a6b3d"/><rect x="22" y="73" width="6" height="20" fill="#7a5230"/><rect x="92" y="73" width="6" height="20" fill="#7a5230"/>'+potato(44,58,.42)+potato(62,56,.42)+potato(80,58,.42),"Mercado")}
+];
+
+/* ---------- views ---------- */
+var app=$("app");
+function topbar(back){return '<div class="top">'+(back?'<button class="back" data-go="home" aria-label="Volver al inicio">← Inicio</button>':'<div class="brand">LESGA <span>juegos</span></div>')+'<button class="icon" id="snd" aria-label="Sonido">'+(state.sound?"🔊":"🔈")+'</button></div>'}
+function allDone(){return state.done[1]&&state.done[2]&&state.done[3]}
+function home(){
+  var n=(state.done[1]?1:0)+(state.done[2]?1:0)+(state.done[3]?1:0);
+  app.innerHTML=topbar(false)+
+  '<div class="stars" aria-label="'+n+' de 3 estrellas">'+[1,2,3].map(function(k){return starSvg(state.done[k])}).join("")+'</div>'+
+  '<div class="mascot"><button id="pachi" aria-label="Escuchar a Pachi">'+mascot()+'</button><div class="bubble" id="bub">¡Hola! Soy <b>Pachi</b>. Vamos a descubrir lo rico que crece en Pasto.</div></div>'+
+  '<div class="menu">'+
+   '<button class="game g1" data-go="g1"><div class="pic">'+STG[2].s+'</div><div><b>El viaje de la papa</b><small>Ordena cómo crece</small></div>'+(state.done[1]?starSvg(true,"star ok"):"")+'</button>'+
+   '<button class="game g2" data-go="g2"><div class="pic">'+svg("0 0 120 100",'<rect width="120" height="100" fill="#fbeab5"/>'+C(40,60,20,"#f6c43a")+C(40,60,13,"#e6ad12")+C(78,48,20,"#f6c43a")+C(78,48,13,"#e6ad12")+C(78,78,20,"#f6c43a")+C(78,78,13,"#e6ad12"),"Monedas")+'</div><div><b>Mercader justo</b><small>¿A quién le vendo?</small></div>'+(state.done[2]?starSvg(true,"star ok"):"")+'</button>'+
+   '<button class="game g3" data-go="g3"><div class="pic">'+svg("0 0 120 100",'<rect width="120" height="100" fill="#f6d9e0"/><rect x="14" y="14" width="40" height="72" rx="8" fill="#2f8f63"/><rect x="66" y="14" width="40" height="72" rx="8" fill="#fff"/>'+potato(86,50,.7,"#a63a55"),"Cartas")+'</div><div><b>Cartas de la tierra</b><small>Encuentra las parejas</small></div>'+(state.done[3]?starSvg(true,"star ok"):"")+'</button>'+
+  '</div>'+
+  (allDone()?'<div class="badge"><b>¡Eres Guardián de la papa!</b>Lo nuestro vale mucho. Cuéntale a tu familia qué producto de Pasto te gustó más.<br><a href="https://esteban24k.github.io/LESGA/">Ver la tienda LESGA</a></div>':'')+
+  '<p class="foot">Para papás y profes: estos juegos enseñan que lo que crece en Nariño tiene trabajo, valor y orgullo detrás. <a href="https://esteban24k.github.io/LESGA/">Tienda LESGA</a></p>';
+}
+function win(msg,again){
+  return '<div class="win">'+starSvg(true,"bigstar")+'<h2>¡Muy bien!</h2><div class="msg">'+msg+'</div><button class="big" data-go="home">Seguir jugando</button><button class="big alt" data-go="'+again+'">Jugar otra vez</button></div>';
+}
+
+/* Game 1 */
+var g1;
+function startG1(){var o;do{o=shuffle([0,1,2,3])}while(o.join()==="0,1,2,3");g1={placed:0,order:o};renderG1();say("Toca las imágenes en orden. ¿Cómo llega la papa a tu mesa?")}
+function renderG1(){
+  var slots="";for(var i=0;i<4;i++)slots+=i<g1.placed?'<div class="slot full">'+STG[i].s+STG[i].t+'</div>':'<div class="slot">'+(i+1)+'</div>';
+  var cards=g1.order.filter(function(k){return k>=g1.placed}).map(function(k){return '<button class="pick" data-s="'+k+'">'+STG[k].s+STG[k].t+'</button>'}).join("");
+  app.className="view";
+  app.innerHTML=topbar(true)+'<h2>¿Cómo llega la papa a tu mesa?</h2><div class="slots">'+slots+'</div>'+(g1.placed<4?'<div class="cards">'+cards+'</div>':win("Detrás de cada papa hay mucho trabajo y mucho cariño.","g1"));
+}
+/* Game 2 */
+var g2;
+function farmer(){return svg("0 0 300 150",'<ellipse cx="150" cy="140" rx="120" ry="8" fill="#000" opacity=".1"/>'+
+  '<rect x="60" y="78" width="52" height="56" rx="14" fill="#2f8f63"/>'+C(86,58,26,"#e0b08a")+E(86,38,40,9,"#d9b25a")+PA("M62 38 Q86 6 110 38Z","#d9b25a")+C(77,58,3.4,"#222")+C(96,58,3.4,"#222")+PA("M76 70 Q86 78 97 70",null,"#7a2a2a",3)+
+  PA("M170 134 Q160 86 200 78 Q240 86 232 134Z","#b98a52")+potato(186,76,.55)+potato(210,72,.55)+potato(198,62,.5)+PA("M186 100 q12 8 24 0",null,"#8a5e2a",3),"Don Papa, el agricultor")}
+function renderG2(){
+  var r=g2.pick;
+  var res="";
+  if(r){
+    var n=r==="a"?3:7,cs="";for(var i=0;i<n;i++)cs+='<div class="coin" style="animation-delay:'+(i*.12)+'s">$</div>';
+    res='<div class="coins" aria-label="'+n+' monedas">'+cs+'</div>'+
+    (r==="a"?'<div class="msg">Solo <b>3 monedas</b>. Cultivó con mucho esfuerzo y le pagaron poco. ¿Probamos otro comprador?</div><button class="big alt" data-pick="reset">Elegir otro</button>'
+            :'<div class="msg">¡<b>7 monedas</b>! Cuando compran directo, el agricultor recibe más. Eso es precio justo.</div><button class="big" data-go="home">Seguir jugando</button><button class="big alt" data-pick="reset">Jugar otra vez</button>');
+  }
+  app.className="view";
+  app.innerHTML=topbar(true)+'<h2>Don Papa quiere vender su cosecha</h2><div class="scene">'+farmer()+'</div>'+
+  (r?res:'<div class="stalls"><button class="stall a" data-pick="a">'+svg("0 0 100 80",'<rect x="12" y="10" width="76" height="18" fill="#9aa5a0"/><rect x="16" y="46" width="68" height="8" fill="#6f7a75"/>'+C(50,66,9,"#6f7a75"),"Intermediario")+'Intermediario</button><button class="stall b" data-pick="b">'+svg("0 0 100 80",'<rect x="12" y="10" width="76" height="18" fill="#2f8f63"/><rect x="16" y="46" width="68" height="8" fill="#9a6b3d"/>'+potato(50,40,.35)+C(50,66,9,"#2f8f63"),"LESGA")+'Compra directa LESGA</button></div>');
+}
+/* Game 3 */
+var g3;
+function startG3(){g3={deck:shuffle([1,2,3,4,5,6,1,2,3,4,5,6]),up:[],ok:{},lock:false};renderG3();say("Encuentra las parejas.")}
+function renderG3(){
+  var cells=g3.deck.map(function(id,i){
+    var shown=g3.ok[i]||g3.up.indexOf(i)>-1;
+    return '<button class="mc'+(g3.ok[i]?" done":shown?" up":"")+'" data-m="'+i+'" aria-label="'+(shown?PRODS[id].n:"Carta tapada")+'">'+(shown?art(id)+'<span class="nm">'+PRODS[id].n+'</span>':'<svg class="bk" viewBox="0 0 24 24"><path fill="#fff" d="M12 2c4 3 7 6 7 10a7 7 0 01-14 0c0-4 3-7 7-10z"/></svg>')+'</button>'}).join("");
+  var n=Object.keys(g3.ok).length;
+  app.className="view";
+  app.innerHTML=topbar(true)+'<h2>Cartas de la tierra</h2>'+(n===12?win("¡Cuántas cosas ricas crecen en Nariño!","g3"):'<div class="mem">'+cells+'</div>');
+}
+
+/* ---------- events ---------- */
+function mark(k){if(!state.done[k]){state.done[k]=true;save()}good();}
+function go(v){
+  try{speechSynthesis.cancel()}catch(e){}
+  app.className="";
+  if(v==="home"){home();window.scrollTo(0,0)}
+  else if(v==="g1")startG1();
+  else if(v==="g2"){g2={pick:null};renderG2();say("Don Papa quiere vender su cosecha. ¿A quién se la vende?")}
+  else if(v==="g3")startG3();
+}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;
+  if(t.dataset.go){go(t.dataset.go);return}
+  if(t.id==="snd"){state.sound=!state.sound;t.textContent=state.sound?"🔊":"🔈";if(!state.sound)try{speechSynthesis.cancel()}catch(e){}return}
+  if(t.id==="pachi"){say("¡Hola! Soy Pachi. Vamos a descubrir lo rico que crece en Pasto.");return}
+  if(t.dataset.s!==undefined){var k=+t.dataset.s;
+    if(k===g1.placed){g1.placed++;if(g1.placed===4){mark(1);say("¡Muy bien! Detrás de cada papa hay mucho trabajo.")}else{good();say(STG[k].t)}renderG1()}
+    else{bad();t.classList.add("shake");say("Intenta otra")}
+    return}
+  if(t.dataset.pick){var p=t.dataset.pick;
+    if(p==="reset"){g2.pick=null;renderG2();return}
+    g2.pick=p;if(p==="b"){mark(2);say("Siete monedas. Cuando compran directo, el agricultor recibe más.")}else{bad();say("Solo tres monedas. ¿Probamos otro comprador?")}
+    renderG2();return}
+  if(t.dataset.m!==undefined){var i=+t.dataset.m;
+    if(g3.lock||g3.ok[i]||g3.up.indexOf(i)>-1)return;
+    g3.up.push(i);renderG3();
+    if(g3.up.length===2){var a=g3.up[0],b=g3.up[1];
+      if(g3.deck[a]===g3.deck[b]){g3.ok[a]=g3.ok[b]=true;g3.up=[];good();say(PRODS[g3.deck[a]].n);
+        if(Object.keys(g3.ok).length===12){mark(3);say("¡Cuántas cosas ricas crecen en Nariño!")}setTimeout(renderG3,50)}
+      else{g3.lock=true;bad();setTimeout(function(){g3.up=[];g3.lock=false;renderG3()},1000)}}
+    else say(PRODS[g3.deck[i]].n);
+  }
+});
+home();
+</script>
+
+</body>
+</html>
